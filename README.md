@@ -50,13 +50,17 @@ cmake --build build-vs2022 --config Release
 手順 (Terminal):
 
 ```bash
-cmake -S . -B build-xcode -G Xcode
-cmake --build build-xcode --config Release
+cmake -S . -B build -G Xcode
+cmake --build build --config Release
 ```
 
-実行ファイルの例:
+Xcode から実行する場合:
 
-- `build-xcode/Release/pitcher`
+- `build/pitcher.xcodeproj` を開き、`Release` で `pitcher` ターゲットを実行
+
+生成されるアプリケーションバンドルの例:
+
+- `build/Release/pitcher.app`
 
 補足:
 
@@ -96,7 +100,7 @@ cmake --build build-make -j
 ビルド後に生成された `pitcher` 実行ファイルを起動します．
 
 - Windows: `build-vs2022/Release/pitcher.exe`
-- macOS: `build-xcode/Release/pitcher`
+- macOS: `build/Release/pitcher.app`
 - Ubuntu: `build-make/pitcher`
 
 起動すると、地面・投球位置を示す立方体・飛来するボールが描画されます．

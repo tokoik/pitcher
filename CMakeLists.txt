@@ -3,7 +3,13 @@ cmake_minimum_required(VERSION 3.15)
 # プログラム名をプロジェクト名と同じにする
 project(pitcher C)
 
-add_executable(${PROJECT_NAME} "pitch-stereo.c")
+if(APPLE)
+    add_executable(${PROJECT_NAME} MACOSX_BUNDLE "pitch-stereo.c")
+    # Xcode でプロジェクトを開いたときの起動ターゲットを pitcher にする
+    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY XCODE_STARTUP_PROJECT ${PROJECT_NAME})
+else()
+    add_executable(${PROJECT_NAME} "pitch-stereo.c")
+endif()
 
 if(WIN32)
     # Windows: プログラム名をスタートアッププロジェクトに設定
@@ -49,10 +55,10 @@ elseif(APPLE)
 elseif(UNIX)
     # Ubuntu Linux: pkg-config を使ってコンパイル・リンクのオプションを決定
     find_package(PkgConfig REQUIRED)
-    
+
     pkg_search_module(PKG_GLUT REQUIRED glut freeglut)
     pkg_search_module(PKG_GL REQUIRED gl)
-    
+
     target_include_directories(${PROJECT_NAME} PRIVATE
         ${PKG_GLUT_INCLUDE_DIRS}
         ${PKG_GL_INCLUDE_DIRS}
