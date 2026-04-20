@@ -5,8 +5,8 @@ project(pitcher C)
 
 if(APPLE)
     add_executable(${PROJECT_NAME} MACOSX_BUNDLE "pitch-stereo.c")
-    # Xcode でプロジェクトを開いたときの起動ターゲットを pitcher にする
-    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY XCODE_STARTUP_PROJECT ${PROJECT_NAME})
+    # Xcode でプロジェクトを開いたときに起動できるようにスキームを生成する
+    set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_GENERATE_SCHEME ON)
 else()
     add_executable(${PROJECT_NAME} "pitch-stereo.c")
 endif()
