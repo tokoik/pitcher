@@ -1,13 +1,12 @@
-﻿#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#ifdef defined(_MSC_VER)
-#  pragma comment(linker, "/subsystem:¥"windows¥" /entry:¥"mainCRTStartup¥"")
-#  include "glut.h"
-#elif defined(__APPLE__)
+﻿#include <stdlib.h>
+#include <math.h>
+#if defined(__APPLE__) || defined(MACOSX)
+#  define GL_SILENCE_DEPRECATION
 #  include <GLUT/glut.h>
 #else
+#  if defined(WIN32)
+#    pragma comment(linker, "/subsystem:¥"windows¥" /entry:¥"mainCRTStartup¥"")
+#  endif
 #  include <GL/glut.h>
 #endif
 
