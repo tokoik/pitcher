@@ -29,11 +29,11 @@ if(WIN32)
     )
     FetchContent_MakeAvailable(freeglut)
 
-    # freeglut のインクルードディレクトリを追加 (glut.h を見つけるため)
+    # glut.h を見つけるために freeglut のインクルードディレクトリを追加
     target_include_directories(${PROJECT_NAME} PRIVATE "${freeglut_SOURCE_DIR}/include" "${freeglut_SOURCE_DIR}/include/GL")
 
-    # freeglut ターゲットと OpenGL をリンク
-    target_link_libraries(${PROJECT_NAME} PRIVATE freeglut opengl32.lib)
+    # freeglut ターゲットと OpenGL, GLU をリンク
+    target_link_libraries(${PROJECT_NAME} PRIVATE freeglut opengl32.lib glu32.lib)
 
     # 実行時に DLL が見つかるようにビルドディレクトリへコピー
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
@@ -58,21 +58,27 @@ elseif(UNIX)
 
     pkg_search_module(PKG_GLUT REQUIRED glut freeglut)
     pkg_search_module(PKG_GL REQUIRED gl)
+    pkg_search_module(PKG_GLU REQUIRED glu)
 
     target_include_directories(${PROJECT_NAME} PRIVATE
         ${PKG_GLUT_INCLUDE_DIRS}
         ${PKG_GL_INCLUDE_DIRS}
+        ${PKG_GLU_INCLUDE_DIRS}
     )
     target_link_directories(${PROJECT_NAME} PRIVATE
         ${PKG_GLUT_LIBRARY_DIRS}
         ${PKG_GL_LIBRARY_DIRS}
+        ${PKG_GLU_LIBRARY_DIRS}
     )
     target_compile_options(${PROJECT_NAME} PRIVATE
         ${PKG_GLUT_CFLAGS_OTHER}
         ${PKG_GL_CFLAGS_OTHER}
+        ${PKG_GLU_CFLAGS_OTHER}
     )
     target_link_libraries(${PROJECT_NAME} PRIVATE
         ${PKG_GLUT_LIBRARIES}
         ${PKG_GL_LIBRARIES}
+        ${PKG_GLU_LIBRARIES}
+        m
     )
 endif()
