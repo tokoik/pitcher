@@ -5,13 +5,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>ja_JP</string>
 	<key>CFBundleExecutable</key>
-	<string>rosslers</string>
+	<string>pitcher</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.example.rosslers</string>
+	<string>com.example.pitcher</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Rosslers Attractor</string>
+	<string>pitcher Attractor</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
