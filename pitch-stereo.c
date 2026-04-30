@@ -1,14 +1,22 @@
-﻿#include <stdlib.h>
-#include <math.h>
-#if defined(__APPLE__) || defined(MACOSX)
+﻿#if defined(__APPLE__) || defined(MACOSX)
 #  define GL_SILENCE_DEPRECATION
 #  include <GLUT/glut.h>
 #else
-#  if defined(WIN32)
-#    pragma comment(linker, "/subsystem:¥"windows¥" /entry:¥"mainCRTStartup¥"")
+#  if defined(_WIN32)
+#    define _USE_MATH_DEFINES
+#    define _CRT_SECURE_NO_WARNINGS
 #  endif
 #  include <GL/glut.h>
+#  if defined(_WIN32)
+#    if !defined(GL_CLAMP_TO_EDGE)
+#      define GL_CLAMP_TO_EDGE 0x812F
+#    endif
+//#    pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
+#  endif
 #endif
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
 /*
 ** ステレオ表示の選択
@@ -57,8 +65,8 @@
 #define SPEED 25.0     /* 球スピード　　　　　　　　　 */
 #define PI 0.3         /* 投球範囲　　　　　　　　　　 */
 
-#define zNear 0.3 /* 前方面の位置　　　　　　　　 */
-#define zFar 20.0 /* 後方面の位置　　　　　　　　 */
+#define zNear 0.3      /* 前方面の位置　　　　　　　　 */
+#define zFar 20.0      /* 後方面の位置　　　　　　　　 */
 
 #if DISPSIZE == VRROOM
 #define W 6.0
@@ -86,16 +94,16 @@ int fd, lock = 0;
 ** 球のデータ
 */
 struct balllist {
-  double vx, vy, vz; /* 初速度　　　　　　　　　　　 */
-  double px, py, pz; /* 現在位置　　　　　　　　　　 */
-  int c;             /* 色番号　　　　　　　　　　　 */
+  double vx, vy, vz;   /* 初速度　　　　　　　　　　　 */
+  double px, py, pz;   /* 現在位置　　　　　　　　　　 */
+  int c;               /* 色番号　　　　　　　　　　　 */
   struct balllist *p, *n;
 } start, stop, *reserve;
 
-float bx, by, bz;    /* ヘッドトラッキングの基準位置 */
-int cx, cy;          /* ウィンドウの中心　　　　　　 */
-int ballcount = 0;   /* ばら撒かれているボールの数　 */
-double parallax = P; /* 視差　　　　　　　　　　　　 */
+float bx, by, bz;      /* ヘッドトラッキングの基準位置 */
+int cx, cy;            /* ウィンドウの中心　　　　　　 */
+int ballcount = 0;     /* ばら撒かれているボールの数　 */
+double parallax = P;   /* 視差　　　　　　　　　　　　 */
 
 /*
  * 地面
@@ -124,10 +132,15 @@ void myGround(double height) {
  */
 void scene(void) {
   static GLfloat ballColor[][4] = {
-      /* 球の色 */
-      {0.2, 0.2, 0.2, 1.0}, {0.2, 0.2, 0.8, 1.0}, {0.2, 0.8, 0.2, 1.0},
-      {0.2, 0.8, 0.8, 1.0}, {0.8, 0.2, 0.2, 1.0}, {0.8, 0.2, 0.8, 1.0},
-      {0.8, 0.8, 0.2, 1.0}, {0.8, 0.8, 0.8, 1.0},
+    /* 球の色 */
+    { 0.2, 0.2, 0.2, 1.0 },
+    { 0.2, 0.2, 0.8, 1.0 },
+    { 0.2, 0.8, 0.2, 1.0 },
+    { 0.2, 0.8, 0.8, 1.0 },
+    { 0.8, 0.2, 0.2, 1.0 },
+    { 0.8, 0.2, 0.8, 1.0 },
+    { 0.8, 0.8, 0.2, 1.0 },
+    { 0.8, 0.8, 0.8, 1.0 }
   };
   struct balllist *p;
 
