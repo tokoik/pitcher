@@ -1,18 +1,15 @@
-﻿#if defined(__APPLE__) || defined(MACOSX)
+﻿#if defined(__APPLE__)
 #  define GL_SILENCE_DEPRECATION
 #  include <GLUT/glut.h>
+#  include <OpenGL/glext.h>
 #else
 #  if defined(_WIN32)
+//#    pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 #    define _USE_MATH_DEFINES
 #    define _CRT_SECURE_NO_WARNINGS
 #  endif
 #  include <GL/glut.h>
-#  if defined(_WIN32)
-#    if !defined(GL_CLAMP_TO_EDGE)
-#      define GL_CLAMP_TO_EDGE 0x812F
-#    endif
-//#    pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
-#  endif
+#  include <GL/glext.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
