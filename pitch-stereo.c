@@ -127,7 +127,7 @@ void myGround(double height) {
 /*
  * シーンの描画
  */
-void scene(void) {
+void scene() {
   static GLfloat ballColor[][4] = {
     /* 球の色 */
     { 0.2, 0.2, 0.2, 1.0 },
@@ -192,7 +192,7 @@ int shot(int value) {
 /*
  * シーンの更新
  */
-void update(void) {
+void update() {
   struct balllist *p, *n;
 
   for (p = start.n; p != &stop; p = n) {
@@ -222,7 +222,7 @@ void update(void) {
 /*
  * 画面表示
  */
-void display(void) {
+void display() {
   static GLfloat lightpos[] = {3.0, 4.0, 5.0, 0.0}; /* 光源の位置 */
 
   GLdouble k = 0.5 * zNear / D;
@@ -411,7 +411,7 @@ void keyboard(unsigned char key, int x, int y) {
 #endif
 }
 
-void idle(void) { glutPostRedisplay(); }
+void idle() { glutPostRedisplay(); }
 
 void mouse(int button, int state, int x, int y) {
   if (state == GLUT_DOWN) {
@@ -450,7 +450,7 @@ void mouse(int button, int state, int x, int y) {
   }
 }
 
-void init(void) {
+void init() {
   struct balllist *p;
   int n = MAXBALL;
 
